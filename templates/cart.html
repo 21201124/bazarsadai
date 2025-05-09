@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% block title %}Your Cart{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row mb-4">
+        <div class="col">
+            <h2 class="mb-0"><i class="fas fa-shopping-cart me-2"></i>Shopping Cart</h2>
+        </div>
+    </div>
+    
+    {% if cart_items %}
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">Cart Items</h5>
+                </div>
+                <div class="card-body p-0">
+                    {% for item in cart_items %}
+                    <div class="d-flex border-bottom p-3">
+                        <div class="flex-shrink-0" style="width: 100px; height: 100px;">
+                            <img src="{{ item.product.image.url }}" class="img-fluid rounded" alt="{{ item.product.name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div class="flex-grow-1 ms-3 d-flex flex-column">
+                            <h5 class="mb-1">{{ item.product.name }}</h5>
+                            <p class="text-muted mb-1"><i class="fas fa-tag me-1"></i>{{ item.product.category }}</p>
+                            <p class="text-success mb-2"><i class="fas fa-money-bill-wave me-1"></i>BDT {{ item.total_price }}</p>
+                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                <div class="input-group input-group-sm" style="max-width: 120px;">
+                                    <a href="{% url 'decrease_quantity' item.id %}" class="btn btn-outline-secondary">
+                                        <i class="fas fa-minus"></i>
+                                    </a>
+                                    <span class="input-group-text bg-white">{{ item.quantity }}</span>
+                                    <a href="{% url 'increase_quantity' item.id %}" class="btn btn-outline-secondary">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
+                                </div>
+                                <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-outline-danger btn-sm">
+                                    <i class="fas fa-trash me-1"></i>Remove
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0"><i class="fas fa-receipt me-2"></i>Order Summary</h5>
+                </div>
+                <div class="card-body">
+                    <div class="receipt">
+                        <div class="text-center mb-3 border-bottom pb-3">
+                            <h6 class="mb-1">BaazarSadai</h6>
+                            <small class="text-muted">Shopping Receipt</small>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between mb-2">
+                                <small class="text-muted">Date:</small>
+                                <small>{% now "F j, Y" %}</small>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <small class="text-muted">Items:</small>
+                                <small>{{ cart_items|length }}</small>
+                            </div>
+                        </div>
+                        
+                        <div class="border-top border-bottom py-3 mb-3">
+                            {% for item in cart_items %}
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div style="max-width: 70%;">
+                                    <small>{{ item.product.name }} × {{ item.quantity }}</small>
+                                </div>
+                                <small>BDT {{ item.total_price }}</small>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Subtotal</span>
+                            <span>BDT {{ total_price }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Shipping</span>
+                            <span>BDT 0.00</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <strong>Total</strong>
+                            <strong>BDT {{ total_price }}</strong>
+                        </div>
+                        
+                        <a href="{% url 'checkout' %}" class="btn btn-primary w-100">
+                            <i class="fas fa-credit-card me-2"></i>Proceed to Checkout
+                        </a>
+                    </div>
+                </div>
+                <div class="card-footer bg-white text-center">
+                    <small class="text-muted">Secure checkout powered by BaazarPay</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-body text-center py-5">
+                    <i class="fas fa-shopping-cart fa-4x mb-3 text-muted"></i>
+                    <h4>Your cart is empty</h4>
+                    <p class="text-muted">Add items to your cart to get started</p>
+                    <a href="{% url 'groceries' %}" class="btn btn-primary">
+                        <i class="fas fa-shopping-basket me-2"></i>Continue Shopping
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

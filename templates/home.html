@@ -1,0 +1,287 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+
+<style>
+    .card-img-container {
+        width: 100%;
+        height: 200px; /* Set a consistent height */
+        overflow: hidden;
+    }
+    .card-img-top {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Ensures images fill the container without stretching */
+    }
+</style>
+
+<section
+    style="background-image: url('https://i.postimg.cc/XqCFm73z/banner-1.jpg');background-repeat: no-repeat;background-size: cover;">
+    <div class="container-lg">
+        <div class="row">
+            <div class="col-lg-6 pt-5 mt-5">
+                <h2 class="display-1 ls-1"><span class="fw-bold text-success">Organic</span> Foods at your <span
+                        class="fw-bold">Doorsteps</span></h2>
+                <p class="fs-4"> We provide fresh and organic vegetables, fruits, and groceries. Start shopping now.</p>
+                <div class="d-flex gap-3">
+                    <a href="{% url 'groceries' %}" class="btn btn-success text-uppercase fs-6 rounded-pill px-4 py-3 mt-3">Start
+                        Shopping</a>
+                    <a href="#" class="btn btn-info text-uppercase fs-6 rounded-pill px-4 py-3 mt-3">Join Now</a>
+                </div>
+                <div class="row my-5">
+                    <div class="col">
+                        <div class="row text-dark">
+                            <div class="col-auto">
+                                <p class="fs-1 fw-bold lh-sm mb-0">14k+</p>
+                            </div>
+                            <div class="col">
+                                <p class="text-uppercase lh-sm mb-0">Product Varieties</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row text-dark">
+                            <div class="col-auto">
+                                <p class="fs-1 fw-bold lh-sm mb-0">50k+</p>
+                            </div>
+                            <div class="col">
+                                <p class="text-uppercase lh-sm mb-0">Happy Customers</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row text-dark">
+                            <div class="col-auto">
+                                <p class="fs-1 fw-bold lh-sm mb-0">10+</p>
+                            </div>
+                            <div class="col">
+                                <p class="text-uppercase lh-sm mb-0">Store Locations</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row row-cols-1 row-cols-sm-3 row-cols-lg-3 g-0 justify-content-center">
+            <div class="col">
+                <div class="card border-0 bg-success rounded-0 p-4 text-light">
+                    <div class="row">
+                        <div class="col-md-3 text-center">
+                            <i class="fas fa-seedling me-1"></i>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="card-body p-0">
+                                <h5 class="text-light">Fresh from farm</h5>
+                                <p class="card-text">
+                                    Fresh & Organic Vegetables are available at your doorsteps.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-0 bg-secondary rounded-0 p-4 text-light">
+                    <div class="row">
+                        <div class="col-md-3 text-center">
+                            <i class="fas fa-truck me-1"></i>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="card-body p-0">
+                                <h5 class="text-light">100% Organic</h5>
+                                <p class="card-text">
+                                    100% Organic products are given by our vendors.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-0 bg-danger rounded-0 p-4 text-light">
+                    <div class="row">
+                        <div class="col-md-3 text-center">
+                            <i class="fas fa-th-list me-1"></i>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="card-body p-0">
+                                <h5 class="text-light">Free delivery</h5>
+                                <p class="card-text">
+                                    Free delivery on all orders above BDT 50.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- popular products -->
+<section class="py-5">
+    <div class="container-lg">
+        <div class="row">
+            <div class="col">
+                <h2 class="text-center text-success">Popular Products</h2>
+                <p class="text-center">
+                    Explore our popular products and start shopping.
+                </p>
+            </div>
+        </div>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
+            <div class="col">
+                <div class="card border-0 shadow-sm">
+                    <img src="https://i.postimg.cc/x81jN6py/category-thumb-1.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            Apple
+                        </h5>
+                        <p class="card-text">BDT 100</p>
+                        <a href="#" class="btn btn-success">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-0 shadow-sm">
+                    <img src="https://i.postimg.cc/xj61VSqs/category-thumb-2.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Bread & Sweets</h5>
+                        <p class="card-text">BDT 200</p>
+                        <a href="#" class="btn btn-success">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-0 shadow-sm">
+                    <img src="https://i.postimg.cc/XYCj5GLh/category-thumb-7.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Eggs</h5>
+                        <p class="card-text">BDT 300</p>
+                        <a href="#" class="btn btn-success">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-0 shadow-sm">
+                    <img src="https://i.postimg.cc/Bb7ST2dW/category-thumb-4.jpg" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Beverage & Drinks</h5>
+                        <p class="card-text">BDT 400</p>
+                        <a href="#" class="btn btn-success">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- vendors -->
+<section class="py-5 bg-light">
+    <div class="container-lg">
+        <div class="row">
+            <div class="col">
+                <h2 class="text-center text-success">Our Vendors</h2>
+                <p class="text-center">
+                    Explore our vendors and start shopping.
+                </p>
+            </div>
+        </div>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
+            <div class="col">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-img-container">
+                        <img src="https://i.postimg.cc/JzsdpjBr/AAHAR1.png" class="card-img-top" alt="...">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">AHAAR BD</h5>
+                        <p class="card-text">Dhaka, Bangladesh</p>
+                        <a href="#" class="btn btn-success">View Products</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-img-container">
+                        <img src="https://i.postimg.cc/7YsW1Kht/chaladal.png" class="card-img-top" alt="...">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Daaraz Grocery</h5>
+                        <p class="card-text">Chittagong, Bangladesh</p>
+                        <a href="#" class="btn btn-success">View Products</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-img-container">
+                        <img src="https://i.postimg.cc/jSB3mCzz/daraz.jpg" class="card-img-top" alt="...">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Chaldal Grocery</h5>
+                        <p class="card-text">Mymensingh, Bangladesh</p>
+                        <a href="#" class="btn btn-success">View Products</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-img-container">
+                        <img src="https://i.postimg.cc/jdd1JpxJ/radhuni.jpg" class="card-img-top" alt="...">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Radhuni Groceries</h5>
+                        <p class="card-text">Barishal, Bangladesh</p>
+                        <a href="#" class="btn btn-success">View Products</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- contact -->
+<section class="py-5">
+    <div class="container-lg">
+        <div class="row">
+            <div class="col">
+                <h2 class="text-center text-success">Contact Us</h2>
+                <p class="text-center">
+                    Contact us for any queries or feedback.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <form>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" aria-describedby="nameHelp">
+                        <div id="nameHelp" class="form-text">We'll never share your name with anyone else.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Message</label>
+                        <textarea class="form-control" id="message" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

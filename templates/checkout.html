@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row mb-4">
+        <div class="col">
+            <h2 class="mb-0"><i class="fas fa-credit-card me-2"></i>Checkout</h2>
+            <p class="text-muted">Complete your purchase</p>
+        </div>
+    </div>
+
+    {% if cart_items %}
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0"><i class="fas fa-shopping-basket me-2"></i>Order Summary</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th class="text-end">Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in cart_items %}
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="{{ item.product.image.url }}" class="img-fluid rounded me-2" alt="{{ item.product.name }}" style="width: 50px; height: 50px; object-fit: cover;">
+                                            <div>
+                                                <h6 class="mb-0">{{ item.product.name }}</h6>
+                                                <small class="text-muted">{{ item.product.category }}</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{{ item.quantity }}</td>
+                                    <td class="text-end">BDT {{ item.total_price }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot class="table-light">
+                                <tr>
+                                    <td colspan="2" class="text-end"><strong>Subtotal:</strong></td>
+                                    <td class="text-end">BDT {{ total_price }}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="text-end"><strong>Shipping:</strong></td>
+                                    <td class="text-end">BDT 0.00</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="text-end"><strong>Total:</strong></td>
+                                    <td class="text-end"><strong>BDT {{ total_price }}</strong></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0"><i class="fas fa-map-marker-alt me-2"></i>Delivery Address</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="fullName" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="fullName" value="{{ user.first_name }} {{ user.last_name }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Address</label>
+                        <textarea class="form-control" id="address" rows="3" required>{{ user.customer.address }}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Phone Number</label>
+                        <input type="text" class="form-control" id="phone" value="{{ user.customer.phone_number }}" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm position-sticky" style="top: 1rem;">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0"><i class="fas fa-lock me-2"></i>Payment Details</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="{% url 'checkout' %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="paymentMethod" class="form-label">Payment Method</label>
+                            <select class="form-select" id="paymentMethod" name="payment_method" required onchange="toggleCardDetails()">
+                                <option value="credit">Credit Card</option>
+                                <option value="debit">Debit Card</option>
+                                <option value="bkash">bKash</option>
+                                <option value="cod">Cash on Delivery</option>
+                            </select>
+                        </div>
+        
+                        <div id="cardDetails">
+                            <div class="mb-3">
+                                <label for="cardName" class="form-label">Name on card</label>
+                                <input type="text" class="form-control" id="cardName" name="card_name" placeholder="Full name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="cardNumber" class="form-label">Card number</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="cardNumber" name="card_number" placeholder="1234 5678 9012 3456">
+                                    <span class="input-group-text"><i class="fab fa-cc-visa"></i> <i class="fab fa-cc-mastercard"></i></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="cardExpiration" class="form-label">Expiration</label>
+                                        <input type="text" class="form-control" id="cardExpiration" name="card_expiration" placeholder="MM/YY">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="cardCVV" class="form-label">CVV</label>
+                                        <input type="text" class="form-control" id="cardCVV" name="card_cvv" placeholder="123">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- bKash payment fields (initially hidden) -->
+                        <div id="bkashDetails" style="display: none;">
+                            <div class="mb-3">
+                                <label for="bkashNumber" class="form-label">bKash Number</label>
+                                <input type="text" class="form-control" id="bkashNumber" name="bkash_number" placeholder="01XXXXXXXXX">
+                            </div>
+                        </div>
+        
+                        <hr class="my-4">
+                        
+                        <div class="d-flex justify-content-between mb-4">
+                            <strong>Total Amount</strong>
+                            <strong>BDT {{ total_price }}</strong>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary w-100 btn-lg">
+                            <i class="fas fa-check-circle me-2"></i>Complete Order
+                        </button>
+                        
+                        <div class="text-center mt-3">
+                            <small class="text-muted"><i class="fas fa-lock me-1"></i> Secure payment processed with SSL encryption</small>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-body text-center py-5">
+                    <i class="fas fa-shopping-cart fa-4x mb-3 text-muted"></i>
+                    <h4>Your cart is empty</h4>
+                    <p class="text-muted">Add items to your cart before proceeding to checkout</p>
+                    <a href="{% url 'groceries' %}" class="btn btn-primary">
+                        <i class="fas fa-shopping-basket me-2"></i>Continue Shopping
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+<script>
+    function toggleCardDetails() {
+        const paymentMethod = document.getElementById('paymentMethod').value;
+        const cardDetails = document.getElementById('cardDetails');
+        const bkashDetails = document.getElementById('bkashDetails');
+        
+        // Reset display
+        cardDetails.style.display = 'none';
+        bkashDetails.style.display = 'none';
+        
+        
+        if (paymentMethod === 'credit' || paymentMethod === 'debit') {
+            cardDetails.style.display = 'block';
+        } else if (paymentMethod === 'bkash') {
+            bkashDetails.style.display = 'block';
+        }
+        
+        // For Cash on Delivery, no additional fields are needed
+    }
+    
+    // Run on page load to set initial state
+    document.addEventListener('DOMContentLoaded', function() {
+        toggleCardDetails();
+    });
+</script>
+{% endblock %}
